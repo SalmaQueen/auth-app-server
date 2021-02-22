@@ -1,10 +1,11 @@
-class RequestController < ApplicationController
+class RequestsController < ApplicationController
     # before_action :authorized, only: [:create, :update, :destroy, :volunters, :volunter_by_me, :republish]
     # before_action :set_request, only: [:show, :update, :destroy, :volunters, :republish]
     # before_action :require_owner, only: [:update, :destroy, :republish]
   
     # GET /api/v1/requests
     def index
+      
       @requests = Request.all
   
       json_response(@requests)
@@ -29,10 +30,19 @@ class RequestController < ApplicationController
     # end
   
     # POST /api/v1/requests
+    
     def create
+      if current_user
       @request = current_user.requests.create!(request_params)
+      # @request.user=current_user
+      # @request.save
   
       json_response(@request, :created)
+
+      else
+        json_response({message:"Login to create a request"}, :unauthorized)
+
+      end
     end
   
     # PATCH/PUT /api/v1/requests/1
@@ -68,7 +78,7 @@ class RequestController < ApplicationController
   
     # Only allow a trusted parameter "white list" through.
     def request_params
-      params.fetch(:request, {}).permit(:title, :description, :status,  :lng,:lat,:type_of_request )
+      params.permit(:title, :description, :status,  :lng,:lat,:type_of_request )
     end
   
     # Only allow owner
