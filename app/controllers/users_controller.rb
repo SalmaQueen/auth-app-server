@@ -26,6 +26,13 @@ class UsersController < ApplicationController
     end
   end
 
+  # def get_user_data
+  #   json_response(current_user)
+   
+  # end
+
+  
+
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)

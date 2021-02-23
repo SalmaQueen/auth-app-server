@@ -11,6 +11,12 @@ class RequestsController < ApplicationController
       json_response(@requests)
     end
   
+    def user_request
+      @requests = current_user.requests
+      json_response(@requests)
+
+
+    end
     # GET /api/v1/requests_volunter_by_me Requests i volunter
     # def volunter_by_me
     #   @requests = @current_user.volunters.map(&:request)

@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   resources :users
   scope '/auth' do
     post '/signin', to: 'user_token#create'
+    # get '/userdata', to: 'users#get_user_data'
     post '/signup', to: 'users#create'
    end
    resources :requests, only: [:index, :create, :destroy, :update]
-
+   get '/userrequest', to: 'requests#user_request'
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
